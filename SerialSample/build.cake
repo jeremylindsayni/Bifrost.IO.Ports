@@ -15,9 +15,10 @@ var framework = Argument("framework", "netcoreapp2.0");
 // ARGUMENTS (WITH DEFAULT PARAMETERS FOR LINUX (Ubuntu 16.04, Raspbian Jessie, etc)
 ///////////////////////////////////////////////////////////////////////
 var runtime = Argument("runtime", "linux-arm");
-var destinationIp = Argument("destinationPi", "192.168.1.126");
-var destinationDirectory = Argument("destinationDirectory", @"/home/pi/DotNetConsoleApps/SerialApp");
-var username = Argument("username", "pi");
+var destinationIp = Argument("destinationPi", "<<the-pi-ip-address>>");
+var destinationDirectory = Argument("destinationDirectory", @"<<the-deployment-folder>>");
+
+var username = Argument("username", "<<the-username>>");
 var executableName = Argument("executableName", "SerialSample");
 
 //////////////////////////////////////////////////////////////////////
