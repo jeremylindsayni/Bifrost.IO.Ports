@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RuntimeIdentifiers>win10-arm;ubuntu.16.04-arm;linux-arm</RuntimeIdentifiers>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bifrost.IO.Ports.Abstractions\Bifrost.IO.Ports.Abstractions.csproj" />
+    <ProjectReference Include="..\Bifrost.IO.Ports.Core\Bifrost.IO.Ports.Core.csproj" />
+    <ProjectReference Include="..\Bifrost.IO.Ports\Bifrost.IO.Ports.csproj" />
+  </ItemGroup>
+
+</Project>

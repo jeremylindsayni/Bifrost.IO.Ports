@@ -1,0 +1,11 @@
+/Bifrost.IO.Ports/bin
+/Bifrost.IO.Ports/obj
+/SerialSample/tools
+/Bifrost.IO.Ports.Abstractions/obj
+/Bifrost.IO.Ports.Abstractions/bin
+/Bifrost.IO.Ports.Core/obj
+/Bifrost.IO.Ports.Core/bin
+/SerialSample/obj
+/SerialSample/bin
+/.vs
+/.vscode
