@@ -15,8 +15,20 @@ namespace Bifrost.IO.Ports
 
         private static int SERIAL_BUFFER_SIZE = 64;
 
+        private static int TIOCMGET = 0x5415;
+
+        private static int TIOCMBIS = 0x5416;
+        
+        private static int TIOCMBIC = 0x5417;
+        
+        private static int TIOCM_DTR = 2;
+        
+        private static int TIOCM_RTS = 4;
+        
         private byte[] serialDataBuffer = new byte[SERIAL_BUFFER_SIZE];
 
+        private int handle = -1;
+      
         [DllImport("libc", EntryPoint = "open")]
         public static extern int Open(string fileName, int mode);
 
@@ -35,12 +47,81 @@ namespace Bifrost.IO.Ports
         [DllImport("libc", EntryPoint = "cfsetspeed")]
         public static extern int SetSpeed(byte[] attributes, int baudrate);
 
+        [DllImport("libc", EntryPoint = "ioctl")]
+        public static extern int IoCtl(int handle, int command, IntPtr parameter);
+        
         public int BaudRate { get; set; }
 
         public string PortName { get; set; }
 
         public bool IsOpen { get; set; }
 
+        public bool DtrEnable
+        {
+            get
+            {
+                if (handle == -1)
+                {
+                    throw new Exception("Port not open!");
+                }
+
+                unsafe
+                {
+                    int result = 0;
+                    int* pointer = &result;
+                    IoCtl(handle, TIOCMGET, (IntPtr) pointer);
+                    return (result & TIOCM_DTR) != 0;
+                }
+            }
+            set
+            {
+                if (handle == -1)
+                {
+                    throw new Exception("Port not open!");
+                }
+
+                unsafe
+                {
+                    int bit = TIOCM_DTR;
+                    int* pointer = &bit;
+                    IoCtl(handle, value ? TIOCMBIS : TIOCMBIC, (IntPtr)pointer);
+                }
+            }
+        }
+
+        public bool RtsEnable
+        {
+            get
+            {
+                if (handle == -1)
+                {
+                    throw new Exception("Port not open!");
+                }
+
+                unsafe
+                {
+                    int result = 0;
+                    int* pointer = &result;
+                    IoCtl(handle, TIOCMGET, (IntPtr) pointer);
+                    return (result & TIOCM_DTR) != 0;
+                }
+            }
+            set
+            {
+                if (handle == -1)
+                {
+                    throw new Exception("Port not open!");
+                }
+
+                unsafe
+                {
+                    int bit = TIOCM_RTS;
+                    int* pointer = &bit;
+                    IoCtl(handle, value ? TIOCMBIS : TIOCMBIC, (IntPtr)pointer);
+                }
+            }
+        }
+        
         public event SerialDataReceivedEventHandler DataReceived;
 
         public void Open()
